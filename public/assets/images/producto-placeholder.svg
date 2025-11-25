@@ -1,0 +1,14 @@
+<svg width="400" height="400" viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="400" height="400" fill="#F3F4F6"/>
+  <g opacity="0.6">
+    <path d="M200 120C185.478 120 173.043 127.357 165.858 138.447L120 200H280L234.142 138.447C226.957 127.357 214.522 120 200 120Z" fill="#9CA3AF"/>
+    <rect x="120" y="200" width="160" height="100" rx="8" fill="#9CA3AF"/>
+    <circle cx="155" cy="235" r="15" fill="#6B7280"/>
+    <circle cx="245" cy="235" r="15" fill="#6B7280"/>
+    <path d="M175 260H225C227.209 260 229 261.791 229 264V270C229 272.209 227.209 274 225 274H175C172.791 274 171 272.209 171 270V264C171 261.791 172.791 260 175 260Z" fill="#6B7280"/>
+  </g>
+  <g transform="translate(150, 320)">
+    <text x="50" y="20" text-anchor="middle" fill="#6B7280" font-family="system-ui, sans-serif" font-size="14" font-weight="500">Producto</text>
+    <text x="50" y="38" text-anchor="middle" fill="#9CA3AF" font-family="system-ui, sans-serif" font-size="12">Sin imagen</text>
+  </g>
+</svg>

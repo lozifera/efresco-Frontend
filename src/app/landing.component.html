@@ -1,0 +1,450 @@
+<!-- eFresco - Landing Page B2B Platform -->
+
+<div class="efresco-landing">
+  <!-- Navigation Header -->
+  <nav class="navbar">
+    <div class="nav-container">
+      <div class="nav-logo">
+        <img src="https://via.placeholder.com/50x50/22c55e/ffffff?text=EF" alt="eFresco">
+        <h2>eFresco</h2>
+      </div>
+      <div class="nav-links">
+        <a href="#inicio" (click)="scrollToSection('inicio')">Inicio</a>
+        <a href="#nosotros" (click)="scrollToSection('nosotros')">Nosotros</a>
+        <a href="#servicios" (click)="scrollToSection('servicios')">Servicios</a>
+        <a href="#contacto" (click)="scrollToSection('contacto')">Contacto</a>
+        <button class="btn-primary" (click)="openRegistration()">Registrarse</button>
+      </div>
+      <div class="nav-mobile" (click)="toggleMobileMenu()">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section id="inicio" class="hero-section">
+    <div class="hero-container">
+      <div class="hero-content">
+        <h1>Conectamos Productores con Empresas</h1>
+        <h2>Plataforma B2B para Comercio Agrícola Digital</h2>
+        <p class="hero-description">
+          eFresco es la plataforma que revoluciona el comercio agrícola en Bolivia,
+          conectando productores directamente con restaurantes, agroindustrias y empresas
+          compradoras, eliminando intermediarios y garantizando precios justos.
+        </p>
+        <div class="hero-stats">
+          <div class="stat-item">
+            <h3>500+</h3>
+            <p>Productores Registrados</p>
+          </div>
+          <div class="stat-item">
+            <h3>200+</h3>
+            <p>Empresas Compradoras</p>
+          </div>
+          <div class="stat-item">
+            <h3>1,000+</h3>
+            <p>Toneladas Comercializadas</p>
+          </div>
+        </div>
+        <div class="hero-buttons">
+          <button class="btn-primary large" (click)="openRegistration('productor')">
+            🌱 Soy Productor
+          </button>
+          <button class="btn-secondary large" (click)="openRegistration('comprador')">
+            🏢 Soy Comprador
+          </button>
+        </div>
+      </div>
+      <div class="hero-image">
+        <img src="https://via.placeholder.com/600x400/22c55e/ffffff?text=Agricultura+Digital" alt="Agricultura Digital">
+      </div>
+
+      <!-- Enriquecimiento: Planteamiento del problema -->
+      <div class="problem-details mt-8">
+        <h3 class="text-lg font-bold mb-2">Planteamiento del problema</h3>
+        <p>Actualmente, los productores deben madrugar para vender en mercados de abasto, compitiendo con intermediarios que presionan los precios a la baja. Los compradores, como restaurantes y agroindustrias, enfrentan el mismo desgaste: recorrer mercados, negociar en condiciones poco transparentes y asumir el riesgo de no encontrar productos frescos ni en la cantidad necesaria. La situación genera ineficiencia, pérdida de tiempo y falta de confianza en el proceso de abastecimiento agrícola.</p>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
+          <div class="bg-red-50 p-4 rounded-xl shadow">
+            <h4 class="font-semibold text-red-700 mb-1">Situación problemática</h4>
+            <ul class="list-disc ml-6 text-sm text-gray-700">
+              <li>Productores y compradores pierden tiempo y dinero en mercados tradicionales.</li>
+              <li>Precios poco transparentes y presión de intermediarios.</li>
+              <li>Riesgo de no encontrar productos frescos o en la cantidad necesaria.</li>
+              <li>Desconfianza y falta de eficiencia en el proceso de abastecimiento.</li>
+            </ul>
+          </div>
+          <div class="bg-green-50 p-4 rounded-xl shadow">
+            <h4 class="font-semibold text-green-700 mb-1">Situación deseada</h4>
+            <ul class="list-disc ml-6 text-sm text-gray-700">
+              <li>Productores y compradores conectados digitalmente en una sola plataforma.</li>
+              <li>Precios justos, transparentes y sin intermediarios.</li>
+              <li>Acceso directo a productos frescos y en la cantidad requerida.</li>
+              <li>Confianza, eficiencia y ahorro de tiempo en el proceso de abastecimiento agrícola.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Problemas Section -->
+  <section id="problemas" class="problems-section">
+    <div class="container">
+      <div class="section-header">
+        <h2>El Problema que Resolvemos</h2>
+        <p class="section-subtitle">Transformamos la ineficiencia del comercio agrícola tradicional</p>
+      </div>
+
+      <div class="problems-comparison">
+        <div class="problem-current">
+          <h3>🚨 Situación Actual</h3>
+          <div class="problem-list">
+            <div class="problem-item">
+              <h4>Para Productores:</h4>
+              <ul>
+                <li>• Madrugar para vender en mercados de abasto</li>
+                <li>• Competir con intermediarios que presionan precios</li>
+                <li>• Dificultades para vender grandes cantidades</li>
+                <li>• Falta de transparencia en precios</li>
+              </ul>
+            </div>
+            <div class="problem-item">
+              <h4>Para Compradores:</h4>
+              <ul>
+                <li>• Recorrer múltiples mercados buscando productos</li>
+                <li>• Negociar en condiciones poco transparentes</li>
+                <li>• Riesgo de no encontrar productos frescos</li>
+                <li>• Pérdida de tiempo y costos adicionales</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="problem-desired">
+          <h3>✅ Con eFresco</h3>
+          <div class="solution-list">
+            <div class="solution-item">
+              <h4>Para Productores:</h4>
+              <ul>
+                <li>• Publican ofertas desde su finca</li>
+                <li>• Precios justos sin intermediarios</li>
+                <li>• Ventas en grandes volúmenes</li>
+                <li>• Transacciones seguras y transparentes</li>
+              </ul>
+            </div>
+            <div class="solution-item">
+              <h4>Para Compradores:</h4>
+              <ul>
+                <li>• Acceso directo a productores</li>
+                <li>• Productos frescos garantizados</li>
+                <li>• Compras en la cantidad necesaria</li>
+                <li>• Ahorro de tiempo y dinero</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Nosotros Section -->
+  <section id="nosotros" class="about-section">
+    <div class="container">
+      <div class="about-content">
+        <div class="about-text">
+          <h2>Sobre eFresco</h2>
+          <div class="mission-vision">
+            <div class="mission">
+              <h3>🎯 Misión</h3>
+              <p>Conectar a productores agrícolas con empresas y comercios a través de una plataforma digital confiable, eficiente y segura, generando relaciones comerciales justas y sostenibles.</p>
+            </div>
+            <div class="vision">
+              <h3>🚀 Visión</h3>
+              <p>Ser la plataforma líder en comercio agrícola digital en Bolivia y la región, reconocida por impulsar el crecimiento de pequeños productores y facilitar el abastecimiento en gran escala.</p>
+            </div>
+          </div>
+
+          <div class="values">
+            <h3>💎 Nuestros Valores</h3>
+            <div class="values-grid">
+              <div class="value-item">
+                <span class="value-icon">🔍</span>
+                <h4>Transparencia</h4>
+                <p>Claridad en precios y procesos</p>
+              </div>
+              <div class="value-item">
+                <span class="value-icon">🛡️</span>
+                <h4>Confianza</h4>
+                <p>Seguridad en pagos y transacciones</p>
+              </div>
+              <div class="value-item">
+                <span class="value-icon">💡</span>
+                <h4>Innovación</h4>
+                <p>Tecnología al servicio del agro</p>
+              </div>
+              <div class="value-item">
+                <span class="value-icon">🌱</span>
+                <h4>Sostenibilidad</h4>
+                <p>Desarrollo económico local</p>
+              </div>
+              <div class="value-item">
+                <span class="value-icon">⚖️</span>
+                <h4>Equidad</h4>
+                <p>Precios justos para todos</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="about-image">
+          <img src="https://via.placeholder.com/500x400/22c55e/ffffff?text=Agricultura+Sostenible" alt="Agricultura Sostenible">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Servicios Section -->
+  <section id="servicios" class="services-section">
+    <div class="container">
+      <div class="section-header">
+        <h2>Cómo Funciona eFresco</h2>
+        <p class="section-subtitle">Conectamos oferta y demanda de productos agrícolas de manera eficiente</p>
+      </div>
+
+      <div class="services-grid">
+        <div class="service-card">
+          <div class="service-icon">🌾</div>
+          <h3>Para Productores</h3>
+          <p>Publica tu oferta de venta directamente desde tu finca</p>
+          <div class="service-features">
+            <li>📱 Registro gratuito y fácil</li>
+            <li>📸 Subir fotos de productos</li>
+            <li>💰 Fijar precios justos</li>
+            <li>📊 Gestionar inventario</li>
+            <li>🤝 Contacto directo con compradores</li>
+          </div>
+          <button class="btn-primary" (click)="openRegistration('productor')">
+            Registrarme como Productor
+          </button>
+        </div>
+
+        <div class="service-card">
+          <div class="service-icon">🏢</div>
+          <h3>Para Compradores</h3>
+          <p>Encuentra productos frescos y realiza pedidos al por mayor</p>
+          <div class="service-features">
+            <li>🔍 Buscar productos específicos</li>
+            <li>⭐ Ver perfiles de productores</li>
+            <li>📋 Realizar ofertas de compra</li>
+            <li>🚚 Coordinar logística</li>
+            <li>💳 Pagos seguros en línea</li>
+          </div>
+          <button class="btn-secondary" (click)="openRegistration('comprador')">
+            Registrarme como Comprador
+          </button>
+        </div>
+
+        <div class="service-card">
+          <div class="service-icon">🔒</div>
+          <h3>Plataforma Segura</h3>
+          <p>Transacciones protegidas con sistema de reputación</p>
+          <div class="service-features">
+            <li>🛡️ Pagos seguros</li>
+            <li>⭐ Sistema de calificaciones</li>
+            <li>📞 Soporte 24/7</li>
+            <li>🔐 Datos protegidos</li>
+            <li>📝 Contratos digitales</li>
+          </div>
+          <button class="btn-outline" (click)="scrollToSection('contacto')">
+            Más Información
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Objetivos Section -->
+  <section class="objectives-section">
+    <div class="container">
+      <div class="section-header">
+        <h2>Nuestros Objetivos</h2>
+        <p class="section-subtitle">Transformando el comercio agrícola en Bolivia</p>
+      </div>
+
+      <div class="objectives-content">
+        <div class="objective-main">
+          <h3>🎯 Objetivo General</h3>
+          <p>Desarrollar una plataforma digital B2B que conecte a productores agrícolas con empresas compradoras, reduciendo intermediarios y garantizando transacciones eficientes, seguras y a precios justos.</p>
+        </div>
+
+        <div class="objectives-specific">
+          <h3>📋 Objetivos Específicos</h3>
+          <div class="objectives-grid">
+            <div class="objective-item">
+              <span class="obj-number">1</span>
+              <p>Diseñar y validar un modelo de negocio utilizando Canvas B2B</p>
+            </div>
+            <div class="objective-item">
+              <span class="obj-number">2</span>
+              <p>Identificar necesidades mediante encuestas a productores y compradores</p>
+            </div>
+            <div class="objective-item">
+              <span class="obj-number">3</span>
+              <p>Desarrollar plataforma web para compra-venta de productos agrícolas</p>
+            </div>
+            <div class="objective-item">
+              <span class="obj-number">4</span>
+              <p>Implementar pasarela de pagos segura y sistema de reputación</p>
+            </div>
+            <div class="objective-item">
+              <span class="obj-number">5</span>
+              <p>Diseñar plan de marketing digital para difusión de la plataforma</p>
+            </div>
+            <div class="objective-item">
+              <span class="obj-number">6</span>
+              <p>Elaborar plan financiero que garantice sostenibilidad</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contacto Section -->
+  <section id="contacto" class="contact-section">
+    <div class="container">
+      <div class="section-header">
+        <h2>¿Listo para Comenzar?</h2>
+        <p class="section-subtitle">Únete a la revolución del comercio agrícola digital</p>
+      </div>
+
+      <div class="contact-content">
+        <div class="contact-info">
+          <h3>Información de Contacto</h3>
+          <div class="contact-items">
+            <div class="contact-item">
+              <span class="contact-icon">📧</span>
+              <div>
+                <h4>Email</h4>
+                <p>info@efresco.com</p>
+              </div>
+            </div>
+            <div class="contact-item">
+              <span class="contact-icon">📱</span>
+              <div>
+                <h4>Teléfono</h4>
+                <p>+591 7 123-4567</p>
+              </div>
+            </div>
+            <div class="contact-item">
+              <span class="contact-icon">📍</span>
+              <div>
+                <h4>Ubicación</h4>
+                <p>La Paz, Bolivia</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="contact-form">
+          <h3>Solicita más información</h3>
+          <form class="form" (ngSubmit)="submitContactForm()">
+            <div class="form-group">
+              <label for="name">Nombre completo *</label>
+              <input type="text" id="name" [(ngModel)]="contactForm.name" name="name" required>
+            </div>
+            <div class="form-group">
+              <label for="email">Email *</label>
+              <input type="email" id="email" [(ngModel)]="contactForm.email" name="email" required>
+            </div>
+            <div class="form-group">
+              <label for="userType">Tipo de usuario *</label>
+              <select id="userType" [(ngModel)]="contactForm.userType" name="userType" required>
+                <option value="">Selecciona una opción</option>
+                <option value="productor">Productor Agrícola</option>
+                <option value="comprador">Empresa Compradora</option>
+                <option value="inversionista">Inversionista</option>
+                <option value="otro">Otro</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="message">Mensaje</label>
+              <textarea id="message" [(ngModel)]="contactForm.message" name="message" rows="4" placeholder="Cuéntanos sobre tu interés en eFresco..."></textarea>
+            </div>
+            <button type="submit" class="btn-primary large">
+              Enviar Mensaje
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-section">
+          <div class="footer-logo">
+            <img src="https://via.placeholder.com/40x40/22c55e/ffffff?text=EF" alt="eFresco">
+            <h3>eFresco</h3>
+          </div>
+          <p>Conectando el campo con la mesa, transformando el comercio agrícola en Bolivia.</p>
+          <div class="social-links">
+            <a href="#" class="social-link">📘</a>
+            <a href="#" class="social-link">📸</a>
+            <a href="#" class="social-link">🐦</a>
+            <a href="#" class="social-link">💼</a>
+          </div>
+        </div>
+
+        <div class="footer-section">
+          <h4>Para Productores</h4>
+          <ul>
+            <li><a href="#">Cómo vender</a></li>
+            <li><a href="#">Precios justos</a></li>
+            <li><a href="#">Soporte técnico</a></li>
+            <li><a href="#">Testimonios</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-section">
+          <h4>Para Compradores</h4>
+          <ul>
+            <li><a href="#">Cómo comprar</a></li>
+            <li><a href="#">Productos disponibles</a></li>
+            <li><a href="#">Calidad garantizada</a></li>
+            <li><a href="#">Logística</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-section">
+          <h4>Empresa</h4>
+          <ul>
+            <li><a href="#">Acerca de</a></li>
+            <li><a href="#">Equipo</a></li>
+            <li><a href="#">Carreras</a></li>
+            <li><a href="#">Prensa</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>&copy; 2025 eFresco. Todos los derechos reservados.</p>
+        <div class="footer-links">
+          <a href="#">Términos de uso</a>
+          <a href="#">Política de privacidad</a>
+          <a href="#">Cookies</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Chat Button (Widget Style) -->
+  <div class="chat-widget" (click)="toggleChat()">
+    <div class="chat-icon">💬</div>
+    <div class="chat-tooltip">¿Necesitas ayuda?</div>
+  </div>
+</div>

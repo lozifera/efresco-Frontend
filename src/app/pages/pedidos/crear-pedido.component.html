@@ -1,0 +1,245 @@
+<!-- Crear Pedido - eFresco -->
+
+<div class="min-h-screen bg-gray-100 py-8">
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+
+    <!-- Loading state -->
+    <div *ngIf="isLoading" class="flex items-center justify-center py-12">
+      <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-green-600"></div>
+      <span class="ml-3 text-gray-600">Cargando información del anuncio...</span>
+    </div>
+
+    <!-- Header -->
+    <div *ngIf="!isLoading" class="mb-8">
+      <button
+        (click)="onCancel()"
+        class="mb-4 flex items-center text-gray-600 hover:text-gray-800 transition-colors">
+        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
+        </svg>
+        Volver a anuncios
+      </button>
+
+      <h1 class="text-3xl font-bold text-gray-900">Crear Pedido</h1>
+      <p class="text-gray-600 mt-2">Completa la información para solicitar este producto</p>
+    </div>
+
+    <!-- Contenido principal -->
+    <div *ngIf="!isLoading" class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+
+      <!-- Información del anuncio (Sidebar) -->
+      <div class="lg:col-span-1">
+        <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 sticky top-8">
+          <h3 class="text-lg font-semibold text-gray-900 mb-4">Información del Anuncio</h3>
+
+          <div class="space-y-4">
+            <div>
+              <h4 class="font-medium text-gray-900">{{ anuncio?.titulo }}</h4>
+              <p class="text-sm text-gray-600 mt-1">{{ anuncio?.descripcion }}</p>
+            </div>
+
+            <div class="border-t pt-4">
+              <div class="flex items-center justify-between mb-2">
+                <span class="text-sm text-gray-600">Precio referencial:</span>
+                <span class="font-semibold text-green-600">
+                  Bs. {{ anuncio?.precio_referencial | number:'1.2-2' }}
+                </span>
+              </div>
+
+              <div class="flex items-center justify-between mb-2">
+                <span class="text-sm text-gray-600">Categoría:</span>
+                <span class="text-sm text-gray-900">{{ anuncio?.producto?.categoria }}</span>
+              </div>
+            </div>
+
+            <div class="border-t pt-4">
+              <h5 class="font-medium text-gray-900 mb-2">Vendedor</h5>
+              <p class="text-sm text-gray-900">{{ anuncio?.vendedor?.nombre }}</p>
+              <p class="text-sm text-gray-600">{{ anuncio?.vendedor?.ubicacion }}</p>
+              <p class="text-sm text-gray-600">{{ anuncio?.vendedor?.telefono }}</p>
+
+              <button
+                (click)="onContactarVendedor()"
+                class="mt-3 w-full px-4 py-2 text-sm font-medium text-white bg-green-600 rounded-lg hover:bg-green-700 transition-colors">
+                <svg class="w-4 h-4 inline mr-2" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.890-5.335 11.893-11.893A11.821 11.821 0 0020.885 3.488"/>
+                </svg>
+                Contactar por WhatsApp
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Formulario de pedido -->
+      <div class="lg:col-span-2">
+        <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+          <form [formGroup]="createPedidoForm" (ngSubmit)="onSubmit()">
+
+            <!-- Cantidad y precio -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+              <div>
+                <label for="cantidad" class="block text-sm font-medium text-gray-700 mb-2">
+                  Cantidad requerida *
+                </label>
+                <input
+                  id="cantidad"
+                  type="number"
+                  formControlName="cantidad"
+                  min="1"
+                  class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500"
+                  [class.border-red-500]="isFieldInvalid('cantidad')"
+                  placeholder="Ej: 100">
+                <p *ngIf="isFieldInvalid('cantidad')" class="mt-1 text-sm text-red-600">
+                  {{ getFieldError('cantidad') }}
+                </p>
+              </div>
+
+              <div>
+                <label for="precio_unitario" class="block text-sm font-medium text-gray-700 mb-2">
+                  Precio por unidad (Bs.) *
+                </label>
+                <input
+                  id="precio_unitario"
+                  type="number"
+                  step="0.01"
+                  formControlName="precio_unitario"
+                  class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500"
+                  [class.border-red-500]="isFieldInvalid('precio_unitario')"
+                  placeholder="Ej: 15.50">
+                <p *ngIf="isFieldInvalid('precio_unitario')" class="mt-1 text-sm text-red-600">
+                  {{ getFieldError('precio_unitario') }}
+                </p>
+              </div>
+            </div>
+
+            <!-- Monto total -->
+            <div class="mb-6 p-4 bg-gray-50 rounded-lg">
+              <div class="flex items-center justify-between">
+                <span class="text-lg font-medium text-gray-900">Total del pedido:</span>
+                <span class="text-2xl font-bold text-green-600">
+                  Bs. {{ montoTotal | number:'1.2-2' }}
+                </span>
+              </div>
+            </div>
+
+            <!-- Dirección de entrega -->
+            <div class="mb-6">
+              <label for="direccion_entrega" class="block text-sm font-medium text-gray-700 mb-2">
+                Dirección de entrega *
+              </label>
+              <textarea
+                id="direccion_entrega"
+                formControlName="direccion_entrega"
+                rows="3"
+                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 resize-none"
+                [class.border-red-500]="isFieldInvalid('direccion_entrega')"
+                placeholder="Dirección completa donde se debe entregar el producto..."></textarea>
+              <p *ngIf="isFieldInvalid('direccion_entrega')" class="mt-1 text-sm text-red-600">
+                {{ getFieldError('direccion_entrega') }}
+              </p>
+            </div>
+
+            <!-- Fecha de entrega y método de pago -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+              <div>
+                <label for="fecha_entrega" class="block text-sm font-medium text-gray-700 mb-2">
+                  Fecha de entrega requerida *
+                </label>
+                <input
+                  id="fecha_entrega"
+                  type="date"
+                  formControlName="fecha_entrega_requerida"
+                  [min]="fechaMinimaEntrega"
+                  class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500"
+                  [class.border-red-500]="isFieldInvalid('fecha_entrega_requerida')">
+                <p *ngIf="isFieldInvalid('fecha_entrega_requerida')" class="mt-1 text-sm text-red-600">
+                  {{ getFieldError('fecha_entrega_requerida') }}
+                </p>
+              </div>
+
+              <div>
+                <label for="metodo_pago" class="block text-sm font-medium text-gray-700 mb-2">
+                  Método de pago *
+                </label>
+                <select
+                  id="metodo_pago"
+                  formControlName="metodo_pago"
+                  class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500"
+                  [class.border-red-500]="isFieldInvalid('metodo_pago')">
+                  <option value="">Selecciona un método</option>
+                  <option value="efectivo">Efectivo</option>
+                  <option value="transferencia">Transferencia bancaria</option>
+                  <option value="cheque">Cheque</option>
+                  <option value="credito">Pago a crédito</option>
+                </select>
+                <p *ngIf="isFieldInvalid('metodo_pago')" class="mt-1 text-sm text-red-600">
+                  {{ getFieldError('metodo_pago') }}
+                </p>
+              </div>
+            </div>
+
+            <!-- Notas adicionales -->
+            <div class="mb-6">
+              <label for="notas" class="block text-sm font-medium text-gray-700 mb-2">
+                Notas adicionales
+                <span class="text-gray-500 font-normal">(Opcional)</span>
+              </label>
+              <textarea
+                id="notas"
+                formControlName="notas"
+                rows="3"
+                maxlength="500"
+                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 resize-none"
+                placeholder="Especificaciones adicionales, condiciones especiales, etc..."></textarea>
+              <p class="mt-1 text-sm text-gray-500">
+                {{ (formControls['notas'].value || '').length }}/500 caracteres
+              </p>
+            </div>
+
+            <!-- Términos y condiciones -->
+            <div class="mb-6">
+              <div class="flex items-start space-x-3">
+                <input
+                  id="acepta_terminos"
+                  type="checkbox"
+                  formControlName="acepta_terminos"
+                  class="mt-1 w-4 h-4 text-green-600 border-gray-300 rounded focus:ring-green-500 focus:ring-2">
+                <label for="acepta_terminos" class="text-sm text-gray-700 leading-relaxed">
+                  Acepto los
+                  <a href="#" class="text-green-600 hover:text-green-700 font-medium">términos y condiciones</a>
+                  de la plataforma y autorizo el procesamiento de este pedido. *
+                </label>
+              </div>
+              <p *ngIf="isFieldInvalid('acepta_terminos')" class="mt-1 text-sm text-red-600">
+                Debes aceptar los términos y condiciones
+              </p>
+            </div>
+
+            <!-- Botones de acción -->
+            <div class="flex items-center justify-between pt-6 border-t border-gray-200">
+              <button
+                type="button"
+                (click)="onCancel()"
+                class="px-6 py-3 text-sm font-medium text-gray-700 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors">
+                Cancelar
+              </button>
+
+              <button
+                type="submit"
+                [disabled]="createPedidoForm.invalid || isSubmitting"
+                class="px-8 py-3 text-sm font-medium text-white bg-green-600 rounded-lg hover:bg-green-700 disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors flex items-center">
+                <svg *ngIf="isSubmitting" class="animate-spin -ml-1 mr-3 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                  <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                  <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+                {{ isSubmitting ? 'Enviando pedido...' : 'Crear pedido' }}
+              </button>
+            </div>
+
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

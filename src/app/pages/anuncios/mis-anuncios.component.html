@@ -1,0 +1,22 @@
+<div class="min-h-screen bg-gray-50 py-8">
+  <div class="max-w-4xl mx-auto px-4">
+    <h1 class="text-2xl font-bold mb-6 text-green-700">Mis Anuncios</h1>
+    <div class="flex gap-4 mb-6">
+      <button (click)="cambiarTipo('venta')" [class.bg-green-600]="tipo === 'venta'" [class.text-white]="tipo === 'venta'" class="px-4 py-2 rounded-lg border border-green-600 text-green-600 font-semibold hover:bg-green-100">Venta</button>
+      <button (click)="cambiarTipo('compra')" [class.bg-blue-600]="tipo === 'compra'" [class.text-white]="tipo === 'compra'" class="px-4 py-2 rounded-lg border border-blue-600 text-blue-600 font-semibold hover:bg-blue-100">Compra</button>
+    </div>
+    <div *ngIf="isLoading" class="text-gray-500">Cargando anuncios...</div>
+    <div *ngIf="error" class="text-red-600">{{ error }}</div>
+    <div *ngIf="!isLoading && anuncios.length === 0 && !error" class="text-gray-400">No tienes anuncios publicados en esta sección.</div>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6" *ngIf="anuncios.length > 0">
+      <div *ngFor="let anuncio of anuncios" class="bg-white rounded-xl shadow p-4 border border-gray-100">
+        <div class="font-bold text-lg mb-2">{{ anuncio.producto?.nombre || anuncio.descripcion }}</div>
+        <div class="mb-1">Cantidad: {{ anuncio.cantidad }} {{ anuncio.unidad }}</div>
+        <div class="mb-1">Precio: S/ {{ anuncio.precio | number:'1.2-2' }}</div>
+        <div class="mb-1">Estado: <span class="font-semibold">{{ anuncio.estado }}</span></div>
+        <div class="mb-1">Fecha: {{ anuncio.fecha_publicacion | date:'short' }}</div>
+        <button (click)="router.navigate(['/anuncios/editar', anuncio.id_anuncio])" class="mt-2 px-3 py-1 bg-yellow-500 text-white rounded hover:bg-yellow-600">Editar</button>
+      </div>
+    </div>
+  </div>
+</div>

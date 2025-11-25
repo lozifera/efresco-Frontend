@@ -1,0 +1,763 @@
+<!-- Panel de Administración - eFresco -->
+
+<div class="min-h-screen bg-gray-100">
+  <!-- Header del Admin -->
+  <header class="bg-white shadow-lg border-b">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-16">
+        <!-- Logo y título -->
+        <div class="flex items-center space-x-4">
+          <div class="flex-shrink-0">
+            <svg class="w-8 h-8 text-green-600" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M12 2L2 7v10c0 5.55 3.84 9.74 9 11 5.16-1.26 9-5.45 9-11V7l-10-5z"/>
+            </svg>
+          </div>
+          <h1 class="text-2xl font-bold text-gray-900">Panel de Administración</h1>
+        </div>
+
+        <!-- Usuario y logout -->
+        <div class="flex items-center space-x-4">
+          <div class="text-right">
+            <p class="text-sm font-medium text-gray-900">{{ currentUser?.nombre }} {{ currentUser?.apellido }}</p>
+            <p class="text-xs text-green-600">Administrador</p>
+          </div>
+          <button
+            (click)="logout()"
+            class="px-4 py-2 text-sm font-medium text-red-600 border border-red-600 rounded-lg hover:bg-red-600 hover:text-white transition-all">
+            Cerrar Sesión
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="flex">
+    <!-- Sidebar -->
+    <nav class="w-64 bg-white shadow-lg h-screen sticky top-0">
+      <div class="p-6">
+        <ul class="space-y-2">
+          <!-- Dashboard -->
+          <li>
+            <button
+              (click)="setActiveSection('dashboard')"
+              [ngClass]="activeSection === 'dashboard' ? 'bg-green-600 text-white' : 'text-gray-700 hover:bg-gray-100'"
+              class="w-full flex items-center px-4 py-3 text-left rounded-lg transition-colors">
+              <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+              </svg>
+              Dashboard
+            </button>
+          </li>
+
+          <!-- Gestión de Usuarios -->
+          <li>
+            <button
+              (click)="setActiveSection('usuarios')"
+              [ngClass]="activeSection === 'usuarios' ? 'bg-green-600 text-white' : 'text-gray-700 hover:bg-gray-100'"
+              class="w-full flex items-center px-4 py-3 text-left rounded-lg transition-colors">
+              <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5 0a4 4 0 11-8 0 4 4 0 018 0z"/>
+              </svg>
+              Gestión de Usuarios
+            </button>
+          </li>
+
+          <!-- Gestión de Productos -->
+          <li>
+            <button
+              (click)="setActiveSection('productos')"
+              [ngClass]="activeSection === 'productos' ? 'bg-green-600 text-white' : 'text-gray-700 hover:bg-gray-100'"
+              class="w-full flex items-center px-4 py-3 text-left rounded-lg transition-colors">
+              <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/>
+              </svg>
+              Gestión de Productos
+            </button>
+          </li>
+
+          <!-- Reportes -->
+          <li>
+            <button
+              (click)="setActiveSection('reportes')"
+              [ngClass]="activeSection === 'reportes' ? 'bg-green-600 text-white' : 'text-gray-700 hover:bg-gray-100'"
+              class="w-full flex items-center px-4 py-3 text-left rounded-lg transition-colors">
+              <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+              </svg>
+              Reportes
+            </button>
+          </li>
+
+          <!-- Mi Perfil -->
+          <li>
+            <button
+              (click)="setActiveSection('perfil')"
+              [ngClass]="activeSection === 'perfil' ? 'bg-green-600 text-white' : 'text-gray-700 hover:bg-gray-100'"
+              class="w-full flex items-center px-4 py-3 text-left rounded-lg transition-colors">
+              <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+              </svg>
+              Mi Perfil
+            </button>
+          </li>
+
+          <!-- Configuración -->
+          <li>
+            <button
+              (click)="setActiveSection('configuracion')"
+              [ngClass]="activeSection === 'configuracion' ? 'bg-green-600 text-white' : 'text-gray-700 hover:bg-gray-100'"
+              class="w-full flex items-center px-4 py-3 text-left rounded-lg transition-colors">
+              <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/>
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+              </svg>
+              Configuración
+            </button>
+          </li>
+        </ul>
+      </div>
+    </nav>
+
+    <!-- Contenido Principal -->
+    <main class="flex-1 p-8">
+      <!-- Dashboard -->
+      <div *ngIf="activeSection === 'dashboard'" class="space-y-6">
+        <div class="flex justify-between items-center">
+          <h2 class="text-3xl font-bold text-gray-900">Dashboard</h2>
+          <div class="flex items-center space-x-4">
+            <button
+              (click)="refreshStats()"
+              [disabled]="isLoadingStats"
+              class="px-4 py-2 text-sm font-medium text-green-600 border border-green-600 rounded-lg hover:bg-green-600 hover:text-white transition-all disabled:opacity-50">
+              <span *ngIf="isLoadingStats" class="inline-flex items-center">
+                <svg class="animate-spin -ml-1 mr-2 h-4 w-4 text-current" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                  <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                  <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+                Actualizando...
+              </span>
+              <span *ngIf="!isLoadingStats">🔄 Actualizar</span>
+            </button>
+            <button
+              (click)="goToLandingPage()"
+              class="px-4 py-2 text-sm font-medium text-blue-600 border border-blue-600 rounded-lg hover:bg-blue-600 hover:text-white transition-all flex items-center space-x-2">
+              <svg class="w-5 h-5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7m-9 2v8m4-8v8m5 0a2 2 0 002-2V7a2 2 0 00-2-2h-3.5a2 2 0 00-1.5.67A2 2 0 0012 5.5a2 2 0 00-1.5-.83H7a2 2 0 00-2 2v11a2 2 0 002 2h10z" />
+              </svg>
+              <span>Ir al Landing Page</span>
+            </button>
+            <div class="text-sm text-gray-500">Actualizado: {{ getCurrentDate() }}</div>
+          </div>
+        </div>
+
+        <!-- Indicador de carga global -->
+        <div *ngIf="isLoadingStats" class="flex justify-center items-center py-8">
+          <div class="inline-flex items-center px-4 py-2 border border-gray-300 rounded-lg bg-white">
+            <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-green-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+              <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+              <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+            </svg>
+            <span class="text-sm font-medium text-gray-900">Cargando estadísticas...</span>
+          </div>
+        </div>
+
+        <!-- Tarjetas de estadísticas -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <!-- Total Usuarios -->
+          <div class="bg-white p-6 rounded-xl shadow-lg border border-gray-100">
+            <div class="flex items-center justify-between">
+              <div>
+                <p class="text-sm text-gray-600">Total Usuarios</p>
+                <p class="text-3xl font-bold text-gray-900">{{ stats.totalUsuarios }}</p>
+                <p class="text-sm text-green-600">+12% este mes</p>
+              </div>
+              <div class="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center">
+                <svg class="w-6 h-6 text-blue-600" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+                </svg>
+              </div>
+            </div>
+          </div>
+
+          <!-- Productores Activos -->
+          <div class="bg-white p-6 rounded-xl shadow-lg border border-gray-100">
+            <div class="flex items-center justify-between">
+              <div>
+                <p class="text-sm text-gray-600">Productores Activos</p>
+                <p class="text-3xl font-bold text-gray-900">{{ stats.productoresActivos }}</p>
+                <p class="text-sm text-green-600">+8% este mes</p>
+              </div>
+              <div class="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center">
+                <svg class="w-6 h-6 text-green-600" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+                </svg>
+              </div>
+            </div>
+          </div>
+
+          <!-- Ventas del Mes -->
+          <div class="bg-white p-6 rounded-xl shadow-lg border border-gray-100">
+            <div class="flex items-center justify-between">
+              <div>
+                <p class="text-sm text-gray-600">Ventas del Mes</p>
+                <p class="text-3xl font-bold text-gray-900">Bs {{ stats.ventasMensual | number:'1.0-0' }}</p>
+                <p class="text-sm text-green-600">+15% vs mes anterior</p>
+              </div>
+              <div class="w-12 h-12 bg-yellow-100 rounded-xl flex items-center justify-center">
+                <svg class="w-6 h-6 text-yellow-600" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M12 2C13.1 2 14 2.9 14 4C14 5.1 13.1 6 12 6C10.9 6 10 5.1 10 4C10 2.9 10.9 2 12 2ZM21 9V7L15 1L13.5 2.5L16.17 5.17C15.24 5.06 14.32 5 13.38 5C10.38 5 7.65 6.64 6.05 9.05L7.4 10.4C8.6 8.55 10.7 7.5 12.95 7.5C14.95 7.5 16.77 8.35 18.04 9.62L15 12.66V9H21Z"/>
+                </svg>
+              </div>
+            </div>
+          </div>
+
+          <!-- Pedidos Pendientes -->
+          <div class="bg-white p-6 rounded-xl shadow-lg border border-gray-100">
+            <div class="flex items-center justify-between">
+              <div>
+                <p class="text-sm text-gray-600">Pedidos Pendientes</p>
+                <p class="text-3xl font-bold text-gray-900">{{ stats.pedidosPendientes }}</p>
+                <p class="text-sm text-red-600">Requieren atención</p>
+              </div>
+              <div class="w-12 h-12 bg-red-100 rounded-xl flex items-center justify-center">
+                <svg class="w-6 h-6 text-red-600" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M19,7H16V6A4,4 0 0,0 12,2A4,4 0 0,0 8,6V7H5A1,1 0 0,0 4,8V19A3,3 0 0,0 7,22H17A3,3 0 0,0 20,19V8A1,1 0 0,0 19,7Z"/>
+                </svg>
+              </div>
+            </div>
+          </div>
+
+          <!-- Productos Registrados -->
+          <div class="bg-white p-6 rounded-xl shadow-lg border border-gray-100">
+            <div class="flex items-center justify-between">
+              <div>
+                <p class="text-sm text-gray-600">Productos Registrados</p>
+                <p class="text-3xl font-bold text-gray-900">{{ stats.productosRegistrados }}</p>
+                <p class="text-sm text-green-600">+25 esta semana</p>
+              </div>
+              <div class="w-12 h-12 bg-purple-100 rounded-xl flex items-center justify-center">
+                <svg class="w-6 h-6 text-purple-600" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M20,7H16V6A4,4 0 0,0 12,2A4,4 0 0,0 8,6V7H5A1,1 0 0,0 4,8V19A3,3 0 0,0 7,22H17A3,3 0 0,0 20,19V8A1,1 0 0,0 19,7Z"/>
+                </svg>
+              </div>
+            </div>
+          </div>
+
+          <!-- Ingresos Totales -->
+          <div class="bg-white p-6 rounded-xl shadow-lg border border-gray-100">
+            <div class="flex items-center justify-between">
+              <div>
+                <p class="text-sm text-gray-600">Ingresos Totales</p>
+                <p class="text-3xl font-bold text-gray-900">Bs {{ stats.ingresosTotales | number:'1.0-0' }}</p>
+                <p class="text-sm text-green-600">+18% vs año anterior</p>
+              </div>
+              <div class="w-12 h-12 bg-indigo-100 rounded-xl flex items-center justify-center">
+                <svg class="w-6 h-6 text-indigo-600" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M7,15H9C9,16.08 10.37,17 12,17C13.63,17 15,16.08 15,15C15,13.9 13.96,13.5 11.76,12.97C9.64,12.44 7,11.78 7,9C7,7.21 8.47,5.69 10.5,5.18V3H13.5V5.18C15.53,5.69 17,7.21 17,9H15C15,7.92 13.63,7 12,7C10.37,7 9,7.92 9,9C9,10.1 10.04,10.5 12.24,11.03C14.36,11.56 17,12.22 17,15C17,16.79 15.53,18.31 13.5,18.82V21H10.5V18.82C8.47,18.31 7,16.79 7,15Z"/>
+                </svg>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Gráficos y actividad reciente -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <!-- Actividad Reciente -->
+          <div class="bg-white p-6 rounded-xl shadow-lg border border-gray-100">
+            <h3 class="text-lg font-semibold text-gray-900 mb-4">Actividad Reciente</h3>
+            <div class="space-y-4">
+              <div class="flex items-center space-x-3">
+                <div class="w-2 h-2 bg-green-500 rounded-full"></div>
+                <p class="text-sm text-gray-600">Nuevo productor registrado: Juan Mendoza</p>
+                <span class="text-xs text-gray-400">Hace 2 horas</span>
+              </div>
+              <div class="flex items-center space-x-3">
+                <div class="w-2 h-2 bg-blue-500 rounded-full"></div>
+                <p class="text-sm text-gray-600">Producto aprobado: Quinua Orgánica</p>
+                <span class="text-xs text-gray-400">Hace 4 horas</span>
+              </div>
+              <div class="flex items-center space-x-3">
+                <div class="w-2 h-2 bg-yellow-500 rounded-full"></div>
+                <p class="text-sm text-gray-600">Pedido completado por María García</p>
+                <span class="text-xs text-gray-400">Hace 6 horas</span>
+              </div>
+              <div class="flex items-center space-x-3">
+                <div class="w-2 h-2 bg-red-500 rounded-full"></div>
+                <p class="text-sm text-gray-600">Reporte de problema técnico</p>
+                <span class="text-xs text-gray-400">Hace 8 horas</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Top Productores -->
+          <div class="bg-white p-6 rounded-xl shadow-lg border border-gray-100">
+            <h3 class="text-lg font-semibold text-gray-900 mb-4">Top Productores del Mes</h3>
+            <div class="space-y-4">
+              <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-3">
+                  <div class="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center text-green-600 font-semibold">1</div>
+                  <div>
+                    <p class="text-sm font-medium text-gray-900">Carlos Rodríguez</p>
+                    <p class="text-xs text-gray-500">Verduras Orgánicas</p>
+                  </div>
+                </div>
+                <span class="text-sm font-semibold text-green-600">Bs 15,420</span>
+              </div>
+              <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-3">
+                  <div class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center text-blue-600 font-semibold">2</div>
+                  <div>
+                    <p class="text-sm font-medium text-gray-900">Ana Morales</p>
+                    <p class="text-xs text-gray-500">Frutas Tropicales</p>
+                  </div>
+                </div>
+                <span class="text-sm font-semibold text-green-600">Bs 12,890</span>
+              </div>
+              <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-3">
+                  <div class="w-10 h-10 bg-yellow-100 rounded-full flex items-center justify-center text-yellow-600 font-semibold">3</div>
+                  <div>
+                    <p class="text-sm font-medium text-gray-900">Luis Fernández</p>
+                    <p class="text-xs text-gray-500">Granos Andinos</p>
+                  </div>
+                </div>
+                <span class="text-sm font-semibold text-green-600">Bs 9,750</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Gestión de Usuarios -->
+      <div *ngIf="activeSection === 'usuarios'">
+        <app-gestion-usuarios></app-gestion-usuarios>
+      </div>
+
+      <!-- Reportes -->
+      <div *ngIf="activeSection === 'reportes'" class="space-y-6">
+        <h2 class="text-3xl font-bold text-gray-900">Reportes y Análisis</h2>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <!-- Reportes disponibles -->
+          <div class="bg-white p-6 rounded-xl shadow-lg">
+            <h3 class="text-lg font-semibold text-gray-900 mb-4">Reportes Disponibles</h3>
+            <div class="space-y-3">
+              <button class="w-full text-left p-3 rounded-lg border border-gray-200 hover:bg-gray-50 transition-colors">
+                <div class="font-medium text-gray-900">Reporte de Ventas</div>
+                <div class="text-sm text-gray-500">Ventas por período, productos más vendidos</div>
+              </button>
+              <button class="w-full text-left p-3 rounded-lg border border-gray-200 hover:bg-gray-50 transition-colors">
+                <div class="font-medium text-gray-900">Reporte de Usuarios</div>
+                <div class="text-sm text-gray-500">Nuevos registros, actividad de usuarios</div>
+              </button>
+              <button class="w-full text-left p-3 rounded-lg border border-gray-200 hover:bg-gray-50 transition-colors">
+                <div class="font-medium text-gray-900">Reporte Financiero</div>
+                <div class="text-sm text-gray-500">Ingresos, comisiones, pagos pendientes</div>
+              </button>
+              <button class="w-full text-left p-3 rounded-lg border border-gray-200 hover:bg-gray-50 transition-colors">
+                <div class="font-medium text-gray-900">Reporte de Inventario</div>
+                <div class="text-sm text-gray-500">Stock, productos agotados, alertas</div>
+              </button>
+            </div>
+          </div>
+
+          <!-- Métricas rápidas -->
+          <div class="bg-white p-6 rounded-xl shadow-lg">
+            <h3 class="text-lg font-semibold text-gray-900 mb-4">Métricas Rápidas</h3>
+            <div class="space-y-4">
+              <div class="flex justify-between items-center">
+                <span class="text-sm text-gray-600">Conversión de visitantes</span>
+                <span class="text-sm font-semibold text-green-600">3.2%</span>
+              </div>
+              <div class="flex justify-between items-center">
+                <span class="text-sm text-gray-600">Tiempo promedio en sitio</span>
+                <span class="text-sm font-semibold text-blue-600">4m 32s</span>
+              </div>
+              <div class="flex justify-between items-center">
+                <span class="text-sm text-gray-600">Satisfacción del cliente</span>
+                <span class="text-sm font-semibold text-yellow-600">4.7/5</span>
+              </div>
+              <div class="flex justify-between items-center">
+                <span class="text-sm text-gray-600">Productos por productor</span>
+                <span class="text-sm font-semibold text-purple-600">2.8 promedio</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Configuración -->
+      <div *ngIf="activeSection === 'configuracion'" class="space-y-6">
+        <h2 class="text-3xl font-bold text-gray-900">Configuración del Sistema</h2>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <!-- Configuración General -->
+          <div class="bg-white p-6 rounded-xl shadow-lg">
+            <h3 class="text-lg font-semibold text-gray-900 mb-4">Configuración General</h3>
+            <div class="space-y-4">
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Nombre de la Plataforma</label>
+                <input type="text" value="eFresco" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent">
+              </div>
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Comisión por Venta (%)</label>
+                <input type="number" value="5" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent">
+              </div>
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Email de Contacto</label>
+                <input type="email" value="admin@efresco.com" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent">
+              </div>
+            </div>
+          </div>
+
+          <!-- Configuración de Notificaciones -->
+          <div class="bg-white p-6 rounded-xl shadow-lg">
+            <h3 class="text-lg font-semibold text-gray-900 mb-4">Notificaciones</h3>
+            <div class="space-y-4">
+              <div class="flex items-center justify-between">
+                <span class="text-sm text-gray-700">Notificar nuevos registros</span>
+                <label class="relative inline-flex items-center cursor-pointer">
+                  <input type="checkbox" checked class="sr-only">
+                  <div class="w-11 h-6 bg-green-600 rounded-full"></div>
+                  <div class="absolute left-1 top-1 bg-white w-4 h-4 rounded-full transition"></div>
+                </label>
+              </div>
+              <div class="flex items-center justify-between">
+                <span class="text-sm text-gray-700">Alertas de productos agotados</span>
+                <label class="relative inline-flex items-center cursor-pointer">
+                  <input type="checkbox" checked class="sr-only">
+                  <div class="w-11 h-6 bg-green-600 rounded-full"></div>
+                  <div class="absolute left-1 top-1 bg-white w-4 h-4 rounded-full transition"></div>
+                </label>
+              </div>
+              <div class="flex items-center justify-between">
+                <span class="text-sm text-gray-700">Reportes semanales</span>
+                <label class="relative inline-flex items-center cursor-pointer">
+                  <input type="checkbox" class="sr-only">
+                  <div class="w-11 h-6 bg-gray-200 rounded-full"></div>
+                  <div class="absolute left-1 top-1 bg-white w-4 h-4 rounded-full transition"></div>
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Botón de guardar -->
+        <div class="flex justify-end">
+          <button class="px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors">
+            Guardar Configuración
+          </button>
+        </div>
+      </div>
+
+      <!-- Gestión de Productos -->
+      <div *ngIf="activeSection === 'productos'" class="space-y-6">
+        <div class="flex justify-between items-center">
+          <h2 class="text-3xl font-bold text-gray-900">Gestión de Productos</h2>
+          <div class="flex space-x-3">
+            <button
+              (click)="irAGestionCompleta()"
+              class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors flex items-center space-x-2">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
+              </svg>
+              <span>Gestión Completa</span>
+            </button>
+            <button
+              (click)="crearNuevoProducto()"
+              class="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors flex items-center space-x-2">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+              </svg>
+              <span>Nuevo Producto</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Filtros y búsqueda -->
+        <div class="bg-white p-4 rounded-xl shadow-sm border border-gray-200">
+          <div class="flex flex-col md:flex-row md:items-center md:justify-between space-y-4 md:space-y-0 md:space-x-4">
+            <div class="flex-1">
+              <input
+                type="text"
+                placeholder="Buscar productos..."
+                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500">
+            </div>
+            <div class="flex space-x-4">
+              <select class="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500">
+                <option value="">Todas las categorías</option>
+                <option value="verduras">Verduras</option>
+                <option value="frutas">Frutas</option>
+                <option value="tuberculos">Tubérculos</option>
+              </select>
+              <select class="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500">
+                <option value="">Todos los estados</option>
+                <option value="activo">Activo</option>
+                <option value="pendiente">Pendiente</option>
+                <option value="inactivo">Inactivo</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- Lista de productos -->
+        <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+          <div class="px-6 py-4 border-b border-gray-200">
+            <h3 class="text-lg font-semibold text-gray-900">Lista de Productos</h3>
+          </div>
+
+          <div class="overflow-x-auto">
+            <!-- Loading state para productos -->
+            <div *ngIf="isLoadingProductos" class="flex justify-center items-center py-12">
+              <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-green-600"></div>
+              <span class="ml-3 text-gray-600">Cargando productos reales...</span>
+            </div>
+
+            <!-- Mensaje cuando no hay productos -->
+            <div *ngIf="!isLoadingProductos && productos.length === 0" class="text-center py-12">
+              <div class="text-gray-500">
+                <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 48 48">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v9a4 4 0 01-4 4H8a4 4 0 01-4-4v-9m16 0H4" />
+                </svg>
+                <h3 class="mt-2 text-sm font-medium text-gray-900">No hay productos</h3>
+                <p class="mt-1 text-sm text-gray-500">Comienza creando tu primer producto.</p>
+              </div>
+            </div>
+
+            <!-- Tabla de productos (solo cuando hay datos y no está cargando) -->
+            <table *ngIf="!isLoadingProductos && productos.length > 0" class="w-full">
+              <thead class="bg-gray-50">
+                <tr>
+                  <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Producto</th>
+                  <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Categoría</th>
+                  <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Precio</th>
+                  <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Stock</th>
+                  <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Productor</th>
+                  <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Estado</th>
+                  <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Acciones</th>
+                </tr>
+              </thead>
+              <tbody class="bg-white divide-y divide-gray-200">
+                <tr *ngFor="let producto of productos" class="hover:bg-gray-50">
+                  <td class="px-6 py-4 whitespace-nowrap">
+                    <div class="flex items-center">
+                      <div class="flex-shrink-0 h-10 w-10">
+                        <img [src]="producto.imagen" alt="Imagen del producto" class="h-10 w-10 rounded-full object-cover border border-gray-200" onerror="this.src='assets/no-image.png'" />
+                      </div>
+                      <div class="ml-4">
+                        <div class="text-sm font-medium text-gray-900">{{ producto.nombre }}</div>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="px-6 py-4 whitespace-nowrap">
+                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                      {{ producto.categoria }}
+                    </span>
+                  </td>
+                  <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                    Bs {{ producto.precio | number:'1.2-2' }}
+                  </td>
+                  <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                    {{ producto.stock }}
+                  </td>
+                  <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                    {{ producto.productor }}
+                  </td>
+                  <td class="px-6 py-4 whitespace-nowrap">
+                    <span
+                      [ngClass]="{
+                        'bg-green-100 text-green-800': producto.estado === 'activo',
+                        'bg-yellow-100 text-yellow-800': producto.estado === 'pendiente',
+                        'bg-red-100 text-red-800': producto.estado === 'inactivo'
+                      }"
+                      class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium">
+                      {{ producto.estado | titlecase }}
+                    </span>
+                  </td>
+                  <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                    <div class="flex space-x-2">
+                      <button
+                        (click)="verProducto(producto.id || producto.id_producto)"
+                        class="text-blue-600 hover:text-blue-900 px-2 py-1 rounded">
+                        Ver
+                      </button>
+                      <button
+                        (click)="editarProducto(producto.id || producto.id_producto)"
+                        class="text-green-600 hover:text-green-900 px-2 py-1 rounded">
+                        Editar
+                      </button>
+                      <button
+                        (click)="toggleProductStatus(producto.id || producto.id_producto)"
+                        class="text-yellow-600 hover:text-yellow-900 px-2 py-1 rounded">
+                        {{ producto.estado === 'activo' ? 'Desactivar' : 'Activar' }}
+                      </button>
+                      <button
+                        (click)="deleteProduct(producto.id || producto.id_producto)"
+                        class="text-red-600 hover:text-red-900 px-2 py-1 rounded">
+                        Eliminar
+                      </button>
+                      <button
+                        (click)="pedirProducto(producto)"
+                        [disabled]="producto.estado !== 'activo' || isPedidoLoading"
+                        class="text-indigo-600 hover:text-indigo-900 px-2 py-1 rounded border border-indigo-600 disabled:opacity-50">
+                        Pedir
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- Mi Perfil -->
+      <div *ngIf="activeSection === 'perfil'" class="space-y-6">
+        <div class="flex justify-between items-center">
+          <h2 class="text-3xl font-bold text-gray-900">Mi Perfil</h2>
+          <div class="text-sm text-gray-500">Administra tu información personal</div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <!-- Información Personal -->
+          <div class="lg:col-span-2 bg-white p-6 rounded-xl shadow-lg">
+            <!-- Sección de Foto de Perfil -->
+            <div class="mb-6 pb-6 border-b border-gray-200">
+              <h3 class="text-lg font-semibold text-gray-900 mb-4">Foto de Perfil</h3>
+              <div class="flex items-center space-x-6">
+                <div class="relative">
+                  <div class="w-24 h-24 rounded-full overflow-hidden border-4 border-gray-200 bg-gray-100 flex items-center justify-center">
+                    <img
+                      *ngIf="currentUser?.foto_perfil_url"
+                      [src]="currentUser.foto_perfil_url"
+                      [alt]="currentUser?.nombre"
+                      class="w-full h-full object-cover"
+                    >
+                    <div *ngIf="!currentUser?.foto_perfil_url" class="w-full h-full flex items-center justify-center text-gray-400">
+                      <svg class="w-12 h-12" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+                      </svg>
+                    </div>
+                  </div>
+                  <button class="absolute -bottom-2 -right-2 w-8 h-8 bg-green-600 text-white rounded-full hover:bg-green-700 transition-colors flex items-center justify-center">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+                    </svg>
+                  </button>
+                </div>
+                <div class="flex-1">
+                  <p class="text-sm text-gray-600 mb-2">Imagen de perfil actual</p>
+                  <div class="space-y-2">
+                    <label class="block">
+                      <input type="file" class="hidden" accept="image/*" #fileInput>
+                      <span class="inline-flex items-center px-3 py-1.5 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 cursor-pointer">
+                        📷 Cambiar Foto
+                      </span>
+                    </label>
+                    <button *ngIf="currentUser?.foto_perfil_url" class="block text-sm text-red-600 hover:text-red-800">
+                      🗑️ Eliminar Foto
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <h3 class="text-lg font-semibold text-gray-900 mb-4">Información Personal</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Nombre</label>
+                <input
+                  type="text"
+                  [value]="currentUser?.nombre || ''"
+                  class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent">
+              </div>
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Apellido</label>
+                <input
+                  type="text"
+                  [value]="currentUser?.apellido || ''"
+                  class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent">
+              </div>
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Email</label>
+                <input
+                  type="email"
+                  [value]="currentUser?.email || ''"
+                  class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent">
+              </div>
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Teléfono</label>
+                <input
+                  type="tel"
+                  [value]="currentUser?.telefono || ''"
+                  placeholder="+591 XXXXXXXX"
+                  class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent">
+              </div>
+            </div>
+
+            <div class="mt-6 pt-4 border-t border-gray-200">
+              <button class="px-6 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors">
+                Actualizar Información
+              </button>
+            </div>
+          </div>
+
+          <!-- Información de la Cuenta -->
+          <div class="space-y-6">
+            <!-- Datos de la cuenta -->
+            <div class="bg-white p-6 rounded-xl shadow-lg">
+              <h3 class="text-lg font-semibold text-gray-900 mb-4">Información de la Cuenta</h3>
+              <div class="space-y-3 text-sm">
+                <div class="flex justify-between">
+                  <span class="text-gray-600">Rol:</span>
+                  <span class="font-medium text-green-600">Administrador</span>
+                </div>
+                <div class="flex justify-between">
+                  <span class="text-gray-600">ID de Usuario:</span>
+                  <span class="font-medium">{{ currentUser?.id_usuario || 'N/A' }}</span>
+                </div>
+                <div class="flex justify-between">
+                  <span class="text-gray-600">Estado:</span>
+                  <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                    Activo
+                  </span>
+                </div>
+                <div class="flex justify-between">
+                  <span class="text-gray-600">Verificado:</span>
+                  <span class="text-green-600 font-medium">Sí</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Cambiar contraseña -->
+            <div class="bg-white p-6 rounded-xl shadow-lg">
+              <h3 class="text-lg font-semibold text-gray-900 mb-4">Seguridad</h3>
+              <div class="space-y-4">
+                <div>
+                  <label class="block text-sm font-medium text-gray-700 mb-2">Contraseña Actual</label>
+                  <input
+                    type="password"
+                    class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent">
+                </div>
+                <div>
+                  <label class="block text-sm font-medium text-gray-700 mb-2">Nueva Contraseña</label>
+                  <input
+                    type="password"
+                    class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent">
+                </div>
+                <div>
+                  <label class="block text-sm font-medium text-gray-700 mb-2">Confirmar Contraseña</label>
+                  <input
+                    type="password"
+                    class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent">
+                </div>
+                <button class="w-full px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
+                  Cambiar Contraseña
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
